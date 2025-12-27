@@ -9,7 +9,7 @@ uploaded_file = st.file_uploader("Foto vom Pferd hochladen", type=["jpg","png","
 
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="Hochgeladenes Foto", use_container_width=True)
+    st.image(image, caption="Hochgeladenes Foto", width='stretch')
 
     recognizer = HorseRecognizer()
     results = recognizer.recognize(image, top_k=3)
