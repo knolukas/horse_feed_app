@@ -1,32 +1,30 @@
 import streamlit as st
-import json
 from PIL import Image
 from src.search import HorseRecognizer
+import json
 
-st.set_page_config(page_title="Pferde Futter App 🐴")
+st.title("🐴 Pferde-Futter-Erkennung (Debug-Ansicht)")
 
-st.title("🐴 Pferde-Futter-Erkennung")
-
-uploaded_file = st.file_uploader(
-    "Foto vom Pferd aufnehmen oder hochladen",
-    type=["jpg", "png", "jpeg"]
-)
+uploaded_file = st.file_uploader("Foto vom Pferd hochladen", type=["jpg","png","jpeg"])
 
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
     st.image(image, caption="Hochgeladenes Foto", use_container_width=True)
 
     recognizer = HorseRecognizer()
-    horse, confidence = recognizer.recognize(image)
+    results = recognizer.recognize(image, top_k=3)
 
+    st.subheader("✅ Top-Ergebnisse")
+    for i, r in enumerate(results):
+        st.write(f"{i+1}. Pferd: **{r['horse']}** – Confidence: `{r['confidence']:.2f}`")
+
+    # Optional: Futterplan des Top-1
     with open("data/feed_plans.json") as f:
         feed_plans = json.load(f)
 
-    st.subheader(f"Erkanntes Pferd: **{horse}**")
-    st.write(f"Confidence: `{confidence:.2f}`")
-
-    if horse in feed_plans:
-        plan = feed_plans[horse]
+    top_horse = results[0]['horse']
+    if top_horse in feed_plans:
+        plan = feed_plans[top_horse]
         st.success("🍽️ Futterplan")
         st.write(f"**Futter:** {plan['futter']}")
         st.write(f"**Menge:** {plan['menge']}")

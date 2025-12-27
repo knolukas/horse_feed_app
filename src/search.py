@@ -14,15 +14,17 @@ class HorseRecognizer:
     def __init__(self):
         self.embedder = CLIPEmbedder()
         self.index = faiss.read_index(INDEX_PATH)
-
         with open(META_PATH) as f:
             self.metadata = json.load(f)
 
-    def recognize(self, image: Image.Image):
+    def recognize(self, image, top_k=3):
         vec = self.embedder.embed_image(image).astype("float32")
-        scores, indices = self.index.search(vec, k=1)
+        scores, indices = self.index.search(vec, k=top_k)
 
-        horse = self.metadata[indices[0][0]]
-        confidence = float(scores[0][0])
-
-        return horse, confidence
+        results = []
+        for score, idx in zip(scores[0], indices[0]):
+            results.append({
+                "horse": self.metadata[idx],
+                "confidence": float(score)
+            })
+        return results
