@@ -1,0 +1,22 @@
+{
+  "bella": {
+    "futter": "Heu + Mineralfutter",
+    "menge": "8 kg",
+    "zeiten": "07:00, 18:00"
+  },
+  "max": {
+    "futter": "Heu + Hafer",
+    "menge": "9 kg",
+    "zeiten": "06:30, 17:30"
+  },
+  "jolly": {
+    "futter": "Heu",
+    "menge": "7 kg",
+    "zeiten": "07:00, 19:00"
+  },
+  "charly": {
+    "futter": "Heu + Mash",
+    "menge": "8 kg",
+    "zeiten": "06:30, 18:30"
+  }
+}
