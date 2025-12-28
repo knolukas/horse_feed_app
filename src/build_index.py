@@ -48,6 +48,7 @@ faiss.normalize_L2(vectors)
 index.add(vectors)
 
 faiss.write_index(index, INDEX_PATH)
+faiss.normalize_L2(vectors)
 
 with open(META_PATH, "w") as f:
     json.dump(horse_names, f, indent=2)

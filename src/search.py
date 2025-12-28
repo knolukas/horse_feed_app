@@ -19,6 +19,8 @@ class HorseRecognizer:
 
     def recognize(self, image, top_k=3):
         vec = self.embedder.embed_image(image).astype("float32")
+        faiss.normalize_L2(vec)
+
         scores, indices = self.index.search(vec, k=top_k)
 
         results = []
@@ -28,3 +30,4 @@ class HorseRecognizer:
                 "confidence": float(score)
             })
         return results
+

@@ -38,8 +38,8 @@ if uploaded_file:
     top1, top2 = results[0], results[1]
 
     unsicher = (
-        top1["confidence"] < CONF_THRESHOLD or
-        (top1["confidence"] - top2["confidence"]) < DELTA_THRESHOLD
+            top1["confidence"] < CONF_THRESHOLD or
+            (top1["confidence"] - top2["confidence"]) < DELTA_THRESHOLD
     )
 
     # --------------------
