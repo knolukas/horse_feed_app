@@ -86,7 +86,7 @@ if uploaded_file:
     # --------------------
     st.divider()
     if st.button("🔄 Neues Pferd", use_container_width=True):
-        st.experimental_rerun()
+        st.rerun()
 
     # --------------------
     # Debug-Ansicht (optional, unten)
