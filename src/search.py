@@ -21,13 +21,23 @@ class HorseRecognizer:
         vec = self.embedder.embed_image(image).astype("float32")
         faiss.normalize_L2(vec)
 
-        scores, indices = self.index.search(vec, k=top_k)
+        # Sicherheit: nicht mehr Nachbarn als Pferde
+        k = min(top_k, len(self.metadata))
+
+        scores, indices = self.index.search(vec, k)
 
         results = []
         for score, idx in zip(scores[0], indices[0]):
+
+            # FAISS kann -1 zurückgeben
+            if idx < 0 or idx >= len(self.metadata):
+                continue
+
             results.append({
                 "horse": self.metadata[idx],
                 "confidence": float(score)
             })
+
         return results
+
 
