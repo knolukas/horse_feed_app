@@ -4,15 +4,16 @@ import json
 import numpy as np
 from PIL import Image
 from src.clip_model import CLIPEmbedder
+from src.dinov2_model import DINOv2Embedder
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-INDEX_PATH = os.path.join(BASE_DIR, "data", "embeddings.faiss")
+INDEX_PATH = os.path.join(BASE_DIR, "data", "index.faiss")
 META_PATH = os.path.join(BASE_DIR, "data", "metadata.json")
 
 class HorseRecognizer:
     def __init__(self):
-        self.embedder = CLIPEmbedder()
+        self.embedder = DINOv2Embedder()
         self.index = faiss.read_index(INDEX_PATH)
         with open(META_PATH) as f:
             self.metadata = json.load(f)

@@ -4,13 +4,15 @@ import faiss
 import numpy as np
 from PIL import Image
 from clip_model import CLIPEmbedder
+from src.dinov2_model import DINOv2Embedder
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMAGE_DIR = os.path.join(BASE_DIR, "data", "images")
 INDEX_PATH = os.path.join(BASE_DIR, "data", "index.faiss")
 META_PATH = os.path.join(BASE_DIR, "data", "metadata.json")
 
-embedder = CLIPEmbedder()
+embedder = DINOv2Embedder()
+#embedder = CLIPEmbedder()
 
 horse_vectors = []
 horse_names = []
