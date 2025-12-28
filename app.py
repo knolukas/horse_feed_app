@@ -35,11 +35,19 @@ if uploaded_file:
     recognizer = HorseRecognizer()
     results = recognizer.recognize(image, top_k=3)
 
-    top1, top2 = results[0], results[1]
+    st.write("DEBUG – Results:", results)
+
+    if len(results) == 0:
+        st.error("❌ Kein bekanntes Pferd erkannt")
+        st.stop()
+
+    top1 = results[0]
+    top2 = results[1] if len(results) > 1 else None
 
     unsicher = (
             top1["confidence"] < CONF_THRESHOLD or
-            (top1["confidence"] - top2["confidence"]) < DELTA_THRESHOLD
+            (top2 is not None and
+             (top1["confidence"] - top2["confidence"]) < DELTA_THRESHOLD)
     )
 
     # --------------------
