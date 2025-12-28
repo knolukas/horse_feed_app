@@ -9,7 +9,7 @@ import os
 # --------------------
 STALL_MODE = True
 CONF_THRESHOLD = 0.8
-DELTA_THRESHOLD = 0.05
+DELTA_THRESHOLD = 0.1
 
 # --------------------
 # Daten laden (GANZ AM ANFANG!)
@@ -82,13 +82,6 @@ if uploaded_file:
                     """)
 
     # --------------------
-    # Reset
-    # --------------------
-    st.divider()
-    if st.button("🔄 Neues Pferd", use_container_width=True):
-        st.rerun()
-
-    # --------------------
     # Debug-Ansicht (optional, unten)
     # --------------------
     with st.expander("🧪 Debug: Top-3 Ergebnisse"):
@@ -96,3 +89,11 @@ if uploaded_file:
             st.write(
                 f"{i+1}. **{r['horse']}** – Confidence: `{r['confidence']:.2f}`"
             )
+
+    # --------------------
+    # Reset
+    # --------------------
+    st.divider()
+    if st.button("🔄 Neues Pferd", use_container_width=True):
+        st.rerun()
+
